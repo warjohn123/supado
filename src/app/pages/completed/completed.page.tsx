@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export function TodosPage() {
+export function CompletedPage() {
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -14,7 +14,7 @@ export function TodosPage() {
               <div className="flex flex-wrap items-center">
                 <div className="relative w-full max-w-full flex-grow flex-1">
                   <h3 className={"font-semibold text-lg text-blueGray-700"}>
-                    Todos
+                    Completed
                   </h3>
                 </div>
               </div>
