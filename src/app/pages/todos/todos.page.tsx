@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { SaveTodoModal } from "./modals/saveTodo.modal";
 
 export function TodosPage() {
+  const [showSaveTodo, setShowSaveTodo] = useState<boolean>(false);
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -12,11 +14,23 @@ export function TodosPage() {
           >
             <div className="rounded-t mb-0 px-4 py-3 border-0">
               <div className="flex flex-wrap items-center">
-                <div className="relative w-full max-w-full flex-grow flex-1">
+                <div className="relative w-full max-w-full justify-between flex-grow flex flex-1">
                   <h3 className={"font-semibold text-lg text-blueGray-700"}>
                     Todos
                   </h3>
+
+                  <button
+                    onClick={() => setShowSaveTodo(true)}
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-100 bg-blue-500 rounded-md shadow-sm disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+                  >
+                    Add Todo
+                  </button>
                 </div>
+
+                <SaveTodoModal
+                  setShowSaveTodo={setShowSaveTodo}
+                  showSaveTodo={showSaveTodo}
+                ></SaveTodoModal>
               </div>
             </div>
             <div className="block w-full overflow-x-auto">
