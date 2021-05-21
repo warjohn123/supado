@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src"
+    },
+    "include": [
+        "src",
+        "electron/server-starter.js"
+    ]
+}
