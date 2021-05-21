@@ -2,25 +2,11 @@ import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { LOAD_COMPLETED_TODOS } from "../../graphql/queries";
 import { Todo } from "../../models/Todo";
-import { DeleteTodoModal } from "../todos/modals/deleteTodo.modal";
 
 export function CompletedPage() {
-  const [showDeleteTodo, setShowDeleteTodo] = useState<boolean>(false);
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const { error, loading, data } = useQuery(LOAD_COMPLETED_TODOS);
-
-  const [selectedTodo, setSelectedTodo] = useState<any>();
-
-  const closeDeleteTodo = () => {
-    setShowDeleteTodo(false);
-    setSelectedTodo(null);
-  };
-
-  const deleteTodo = (todo: Todo) => {
-    setSelectedTodo(todo);
-    setShowDeleteTodo(true);
-  };
 
   useEffect(() => {
     console.log("data", data);
@@ -63,7 +49,7 @@ export function CompletedPage() {
                       Due Date
                     </th>
                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                      &nbsp;
+                      Completed Date
                     </th>
                   </tr>
                 </thead>
@@ -79,21 +65,13 @@ export function CompletedPage() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         {todo.dueDate}
                       </td>
-                      <td className="border-t-0 px-6 flex justify-around align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <i
-                          className="fa fa-trash text-red-400 cursor-pointer text-base"
-                          onClick={() => deleteTodo(todo)}
-                        ></i>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                        {todo.completedDate}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <DeleteTodoModal
-                setShowDeleteTodo={closeDeleteTodo}
-                showDeleteTodo={showDeleteTodo}
-                selectedTodo={selectedTodo}
-              ></DeleteTodoModal>
             </div>
           </div>
         </div>

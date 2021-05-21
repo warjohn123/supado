@@ -1,12 +1,14 @@
 import { useMutation } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Modal from "react-modal";
-import { Todo } from "../../../models/Todo";
 import {
   COMPLETE_TODO_MUTATION,
   DELETE_TODO_MUTATION,
 } from "../../../graphql/mutations";
-import { LOAD_UNCOMPLETED_TODOS } from "../../../graphql/queries";
+import {
+  LOAD_COMPLETED_TODOS,
+  LOAD_UNCOMPLETED_TODOS,
+} from "../../../graphql/queries";
 import { modalStyles } from "../../../constants/modalStyles";
 
 interface CompleteTodoModalInterface {
@@ -26,6 +28,9 @@ export function CompleteTodoModal(props: CompleteTodoModalInterface) {
     refetchQueries: [
       {
         query: LOAD_UNCOMPLETED_TODOS,
+      },
+      {
+        query: LOAD_COMPLETED_TODOS,
       },
     ],
   });

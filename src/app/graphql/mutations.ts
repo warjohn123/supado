@@ -11,7 +11,7 @@ export const CREATE_TODO_MUTATION = gql`
 `;
 
 export const UPDATE_TODO_MUTATION = gql`
-  mutation CompleteTodo($id: Int!, $dueDate: date!, $title: String!) {
+  mutation CompleteTodo($id: Int!, $dueDate: date, $title: String!) {
     update_todos_by_pk(
       pk_columns: { id: $id }
       _set: { dueDate: $dueDate, title: $title }
@@ -22,7 +22,7 @@ export const UPDATE_TODO_MUTATION = gql`
 `;
 
 export const COMPLETE_TODO_MUTATION = gql`
-  mutation CompleteTodo($id: Int!, $completedDate: date!) {
+  mutation CompleteTodo($id: Int!, $completedDate: date) {
     update_todos_by_pk(
       pk_columns: { id: $id }
       _set: { completedDate: $completedDate }

@@ -2,12 +2,14 @@ import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
-import { Todo } from "../../../models/Todo";
 import {
   CREATE_TODO_MUTATION,
   UPDATE_TODO_MUTATION,
 } from "../../../graphql/mutations";
-import { LOAD_UNCOMPLETED_TODOS } from "../../../graphql/queries";
+import {
+  LOAD_COMPLETED_TODOS,
+  LOAD_UNCOMPLETED_TODOS,
+} from "../../../graphql/queries";
 import { modalStyles } from "../../../constants/modalStyles";
 
 interface SaveTodoModalInterface {
@@ -19,7 +21,7 @@ interface SaveTodoModalInterface {
 Modal.setAppElement("#root");
 
 export function SaveTodoModal(props: SaveTodoModalInterface) {
-  const [dueDate, setDueDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState<any>();
   const [title, setTitle] = useState("");
   const closeModal = () => {
     props.setShowSaveTodo();
@@ -38,6 +40,9 @@ export function SaveTodoModal(props: SaveTodoModalInterface) {
       {
         query: LOAD_UNCOMPLETED_TODOS,
       },
+      {
+        query: LOAD_COMPLETED_TODOS,
+      },
     ],
   });
 
@@ -47,9 +52,11 @@ export function SaveTodoModal(props: SaveTodoModalInterface) {
       createTodo({
         variables: {
           title,
-          dueDate: `${dueDate.getFullYear()}/${
-            dueDate.getMonth() + 1
-          }/${dueDate.getDate()}`,
+          dueDate: dueDate
+            ? `${dueDate.getFullYear()}/${
+                dueDate.getMonth() + 1
+              }/${dueDate.getDate()}`
+            : null,
         },
       });
 
@@ -59,9 +66,11 @@ export function SaveTodoModal(props: SaveTodoModalInterface) {
         variables: {
           title,
           id: props.selectedTodo?.id.toString(),
-          dueDate: `${dueDate.getFullYear()}/${
-            dueDate.getMonth() + 1
-          }/${dueDate.getDate()}`,
+          dueDate: dueDate
+            ? `${dueDate.getFullYear()}/${
+                dueDate.getMonth() + 1
+              }/${dueDate.getDate()}`
+            : null,
         },
       });
 
@@ -71,7 +80,9 @@ export function SaveTodoModal(props: SaveTodoModalInterface) {
 
   useEffect(() => {
     if (props.selectedTodo) {
-      setDueDate(new Date(props.selectedTodo.dueDate));
+      if (props.selectedTodo?.dueDate) {
+        setDueDate(new Date(props.selectedTodo.dueDate));
+      }
       setTitle(props.selectedTodo.title);
     }
   }, [props]);
