@@ -14,7 +14,7 @@ export function AppRoutes() {
   return (
     <Router>
       <Sidebar></Sidebar>
-      <div className="relative md:ml-64 bg-blueGray-100 min-h-screen">
+      <div className="relative md:ml-64 bg-gray-100 min-h-screen">
         <Navbar />
         <div className="px-4 md:px-10 mx-auto w-full">
           <Switch>
